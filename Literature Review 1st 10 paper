@@ -1,0 +1,35 @@
+II. Literature Review
+
+Bangla Natural Language Processing (NLP) research has undergone remarkable development in the past decade, transitioning from feature-based models to deep neural and transformer-based architectures. The advent of pre-trained language models such as mBERT, BanglaBERT, DistilBERT, and XLM-RoBERTa has significantly influenced sentence and text classification research, especially in low-resource languages like Bangla.
+
+Rahman et al. demonstrated that model compression techniques such as knowledge distillation, pruning, and quantization can dramatically enhance the deployability of transformer models without losing performance [1]. Their optimized BERT variant achieved a 3.87× speedup and 4× compression ratio for Bengali emotion classification while maintaining competitive accuracy. This advancement supports efficient deployment of BERT-like models in real-world, resource-limited environments—an important milestone for Bangla NLP applications.
+
+Parallel studies explored domain adaptation through contrastive learning. Swarnali et al. applied Token-level Adversarial Contrastive Training (TACT) and Label-aware Contrastive Loss (LCL) for multi-class Bangla text classification [2]. Their experiments revealed that contrastive learning—particularly TACT—enhanced fine-grained sentiment understanding and reached an F1-score of 91% on multiclass datasets such as BHS-M. The approach highlights how contrastive frameworks can complement transformer architectures like BanglaBERT to capture nuanced sentiment in morphologically rich languages.
+
+Earlier, Ghosh and Senapati’s Bangla BERT-based domain classification marked one of the first coarse-grained applications of transformers for Bangla text [3]. Their model trained on the TechDOfication 2020 dataset successfully classified texts into technical fields such as physics, management, and computer science. This research solidified BanglaBERT’s utility beyond sentiment analysis, extending it to domain-specific classification.
+
+Tanvir et al. later integrated Generative Adversarial Networks into transformer learning, developing GAN-Bangla-BERT for text classification with minimal labeled data [4]. Their approach demonstrated that semi-supervised GAN-BERT architectures can outperform traditional BERT when data scarcity is severe—achieving up to 85.4% accuracy on Bengali Hate Speech datasets and 68.2% on Bangla fake news classification. This model effectively bridged the gap between labeled and unlabeled learning scenarios in Bangla NLP.
+
+Following that trajectory, Basher et al. proposed GAN-BnBERT, a semi-supervised model for intent classification tasks [5]. They created the BNIntent30 dataset with 30 intent classes derived from CLINC150 and showed that their GAN-augmented BERT model surpassed both BiLSTM and standalone BERT architectures in accuracy. The study proved that adversarial training could generalize across Bangla intent recognition, which is a vital aspect of conversational AI development.
+
+Another notable contribution came from Jahan et al., who introduced BanglaHateBERT, a retrained BERT model for abusive language detection [6]. By fine-tuning BanglaBERT with 1.5 million offensive social media posts, they achieved state-of-the-art accuracy in hate speech detection, illustrating the benefits of domain-specific pretraining. Their 15K manually annotated hate dataset remains one of the most comprehensive Bengali resources in the field.
+
+Complementing these advances, Rahman et al.’s work on emotion classification [1] and Swarnali et al.’s contrastive learning-based classifiers [2] collectively underscore how BanglaBERT and mBERT models can be fine-tuned for emotion, sentiment, and domain analysis tasks with minimal data loss despite compression or adversarial transformations.
+
+Bijoy et al. contributed to linguistic diversity through BanglaTense, a large-scale dataset of 17,819 sentences labeled by tense—past, present, and future [7]. The dataset enables temporal sentence-type classification and paves the way for applying models such as XLM-R or DistilBERT to structural and grammatical understanding in Bangla. This directly benefits sentence-type classification research where syntactic and temporal cues are critical.
+
+In addition to these model-based works, complementary architectures like DistilBERT and TinyBERT have been explored for resource optimization [1]. Studies suggest that distilled or quantized models retain up to 97% of language understanding capability while reducing computational requirements by nearly 75%, making them ideal for mobile or embedded Bangla NLP solutions.
+
+Cumulatively, these works establish a comprehensive ecosystem of Bangla NLP focused on text and sentence classification. The integration of multilingual pre-trained transformers (mBERT, XLM-RoBERTa) with Bangla-specific models (BanglaBERT, BanglaHateBERT) has yielded substantial progress in emotion analysis, hate speech detection, domain identification, and intent recognition. At the same time, advances in contrastive learning, adversarial training, and knowledge distillation have refined the efficiency and interpretability of Bangla transformer models.
+
+Collectively, the reviewed literature confirms that Bangla NLP is transitioning from general text processing to specialized and linguistically nuanced applications. Such transformations lay the groundwork for more granular tasks, including Bangla sentence-type classification, where understanding morphological, syntactic, and semantic relationships is essential.
+
+References
+
+[1] Rahman, M.H. et al., Optimizing BERT for Bengali Emotion Classification (CMES, 2025).
+[2] Swarnali, F.H. et al., Bengali Multi-class Text Classification via Enhanced Contrastive Learning (ICCIT, 2024).
+[3] Ghosh, K. & Senapati, A., Technical Domain Classification of Bangla Text using BERT (ICTCon, 2021).
+[4] Tanvir, R. et al., A GAN-BERT Based Approach for Bengali Text Classification with a Few Labeled Examples (2022).
+[5] Basher, M.J.I. et al., Bengali Intent Classification with Generative Adversarial BERT (ICCIT, 2023).
+[6] Jahan, M.S. et al., BanglaHateBERT: BERT for Abusive Language Detection in Bengali (LREC, 2022).
+[7] Bijoy, M.H.I. et al., BanglaTense: A Large-Scale Dataset of Bangla Sentences Categorized by Tense (Data in Brief, 2025).
