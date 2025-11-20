@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NBR — Animated One-File Website</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0d0c1d;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  width: 100%;
+  padding: 18px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: space-between;
+  z-index: 999;
+  animation: fadeDown .9s ease forwards;
+  opacity: 0;
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+nav .logo { font-size: 26px; font-weight: 800; }
+nav .logo span {
+  background: linear-gradient(45deg,#3d5afe,#7c4dff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+nav ul { display: flex; gap: 24px; list-style: none; }
+nav ul li {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: .3s;
+}
+nav ul li:hover, nav ul li.active {
+  background: linear-gradient(45deg,#3d5afe,#7c4dff);
+}
+
+/* PAGE SYSTEM */
+.page {
+  display: none;
+  padding-top: 140px;
+  min-height: 100vh;
+  animation: fadeIn .6s ease;
+}
+.page.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding-top: 100px;
+  animation: zoomFade 1.2s ease forwards;
+  opacity: 0;
+  transform: scale(0.97);
+}
+@keyframes zoomFade {
+  0% { opacity: 0; transform: scale(0.95) translateY(20px);}
+  100% { opacity: 1; transform: scale(1) translateY(0);}
+}
+.hero h1 { font-size: 55px; font-weight: 800; }
+.hero p { margin-top: 14px; font-size: 18px; color: #c9c9dd; }
+
+/* BLOBS */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: .45;
+  z-index: -1;
+  animation: blobFloat 10s infinite ease-in-out alternate;
+}
+.blob1 {
+  width: 380px; height: 380px;
+  background: #3d5afe;
+  top: 20%; left: 7%;
+}
+.blob2 {
+  width: 320px; height: 320px;
+  background: #7c4dff;
+  bottom: 10%; right: 10%;
+}
+@keyframes blobFloat {
+  from { transform: translateY(0px); }
+  to { transform: translateY(40px); }
+}
+
+/* LIQUID */
+.liquid-bg {
+  position: fixed;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  z-index: -2;
+  background: radial-gradient(circle at 20% 20%, #3d5afe20, transparent 60%),
+              radial-gradient(circle at 80% 50%, #7c4dff20, transparent 60%),
+              radial-gradient(circle at 50% 80%, #5e35b120, transparent 70%);
+  animation: liquidMove 18s infinite ease-in-out alternate;
+}
+@keyframes liquidMove {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.2) rotate(10deg); }
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.06);
+  padding: 22px;
+  border-radius: 16px;
+  margin: 30px auto;
+  width: 80%;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: .3s ease;
+}
+.card:hover {
+  background: rgba(124,77,255,0.25);
+  transform: translateY(-8px);
+}
+
+/* BLOG */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 20px;
+  margin: 40px;
+}
+.blog-card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: .3s;
+}
+.blog-card:hover {
+  transform: translateY(-10px);
+  background: rgba(124,77,255,0.22);
+}
+
+/* FORMS */
+form input, form textarea {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  outline: none;
+  color: #fff;
+}
+button {
+  padding: 12px 20px;
+  background: linear-gradient(45deg,#3d5afe,#7c4dff);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: .3s ease;
+}
+button:hover {
+  filter: brightness(1.2);
+  transform: translateY(-4px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="liquid-bg"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+  <div class="logo">PAPER<span>X</span>CHANGE</div>
+  <ul>
+    <li class="nav-link active" data-page="home">Home</li>
+    <li class="nav-link" data-page="marketplace">Marketplace</li>
+    <li class="nav-link" data-page="sell">Sell</li>
+    <li class="nav-link" data-page="about">About</li>
+    <li class="nav-link" data-page="blog">Blog</li>
+    <li class="nav-link" data-page="contact">Contact</li>
+  </ul>
+</nav>
+
+<section id="home" class="page active">
+  <div class="hero">
+    <h1>Where Research Meets Opportunity</h1>
+    <p>The smartest way to buy & sell research authorship slots.</p>
+  </div>
+  <div class="card reveal">
+    <h2>Welcome to PaperXchange</h2>
+    <h2>           -                   </h2>
+    <p>Professional. Secure. Modern.</p>
+  </div>
+  <div class="card reveal">
+  <h2>Research Paper Writing Tips</h2>
+  <p style="margin-top:10px; line-height:1.7; color:#d6d6e6;">
+    Writing a strong research paper begins with a clear understanding of the problem you’re addressing.
+    Always start by defining your research question and explaining why it’s important. Talk about
+    existing studies and what gap your paper fills — this builds credibility.  
+    <br><br>
+    Next, ensure your methodology is clearly explained so readers can understand how your results were
+    produced. Use visuals like graphs, tables, or charts to make your findings easier to interpret.
+    Most importantly, write in a simple, direct style — avoid long sentences and focus on clarity.
+    <br><br>
+    Finally, conclude with what your research contributes to the field and what future work could
+    improve or expand upon your findings. This helps your work stand out and shows real academic value.
+  </p>
+</div>
+
+</section>
+
+<section id="marketplace" class="page">
+  <div class="hero">
+    <h1>Marketplace</h1>
+    <p>Browse verified research papers.</p>
+  </div>
+  <div class="card reveal">
+    <h3>AI/ML — Scopus Indexed</h3>
+    <p>Author slots available.</p>
+  </div>
+  <div class="card reveal">
+  <h2>How to Choose the Best Research Paper (Complete Guide)</h2>
+
+  <p style="margin-top:12px; line-height:1.7; color:#d6d6e6;">
+    Choosing the right research paper to purchase an authorship slot from is extremely important.
+    A well-selected paper can strengthen your CV, boost scholarship chances, and increase acceptance
+    into international programs. Here’s a complete guide to help you make the best choice:
+  </p>
+
+  <h3 style="margin-top:20px;">1. Check the Field Relevance</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    Always choose a paper closely related to your academic or professional background.
+    For example, if you’re studying computer science, AI, data science, or IoT papers are more suitable.
+  </p>
+
+  <h3 style="margin-top:18px;">2. Look for Verified Indexing</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    Papers indexed in Scopus, SCI, Web of Science, or UGC-approved journals carry more value.
+    PaperXchange ensures that sellers upload valid acceptance letters for verification.
+  </p>
+
+  <h3 style="margin-top:18px;">3. Understand the Publication Timeline</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    The timeline determines when the paper will officially appear online.
+    If you need urgent publications for an application, choose papers with short timelines.
+  </p>
+
+  <h3 style="margin-top:18px;">4. Check the Number of Available Slots</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    Papers with fewer available slots often mean less competition and higher exclusivity.
+    They also typically indicate earlier submission progress.
+  </p>
+
+  <h3 style="margin-top:18px;">5. Review the Seller’s Credentials</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    Verified sellers with high ratings are more trustworthy. They tend to respond quickly
+    and maintain smooth teamwork throughout the authorship integration process.
+  </p>
+
+  <h3 style="margin-top:18px;">6. Contact the Seller Before Buying</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    Always send a message to clarify your position in the paper, authorship rights,
+    expected responsibilities, and the final authorship certificate you will receive.
+  </p>
+
+  <h3 style="margin-top:18px;">7. Understand the Pricing Range</h3>
+  <p style="line-height:1.7; color:#cfcfe3;">
+    Price depends on indexing, journal reputation, the field, the number of authors, and urgency.
+    Always negotiate professionally — most sellers on PaperXchange accept reasonable offers.
+  </p>
+
+  <h3 style="margin-top:18px;">Final Advice</h3>
+  <p style="line-height:1.7; margin-bottom:10px; color:#cfcfe3;">
+    Select a paper that aligns with your future goals. If you’re planning to apply for graduate school,
+    choose a topic that reflects your interest and skills. A well-chosen paper can significantly
+    elevate your academic profile.
+  </p>
+
+</div>
+</section>
+
+<section id="sell" class="page">
+  <div class="hero">
+    <h1>Sell Your Paper</h1>
+    <p>Upload your accepted paper.</p>
+  </div>
+
+  <div class="card reveal">
+    <form>
+      <input type="file" />
+      <input type="text" placeholder="Paper Field" />
+      <input type="text" placeholder="Indexing Type" />
+      <input type="text" placeholder="Price Range" />
+      <button>Submit</button>
+    </form>
+  </div>
+  <div class="card reveal">
+  <h2>Rules & Regulations for Sellers</h2>
+
+  <p style="margin-top:12px; line-height:1.7; color:#d6d6e6;">
+    Before submitting your paper, please read the following rules carefully.
+    Selling authorship requires honesty, transparency, and academic responsibility.
+  </p>
+
+  <ul style="margin-top:15px; padding-left:20px; line-height:1.7; color:#cfcfe3; font-size:15px;">
+    <li>You must upload a valid and original acceptance letter issued by the journal or conference.</li>
+    <li>No plagiarized or AI-generated acceptance documents are allowed.</li>
+    <li>You must clearly specify which authorship positions are available.</li>
+    <li>Once a buyer joins the paper, you must maintain smooth communication with them.</li>
+    <li>You cannot remove or replace a buyer’s authorship once confirmed.</li>
+    <li>Any revisions requested by the conference/journal must be communicated clearly to all co-authors.</li>
+    <li>All payments and negotiations must remain inside the PaperXchange platform.</li>
+    <li>Any attempt of fraud, misrepresentation, or fake documents will result in permanent ban.</li>
+    <li>Sellers must ensure that the final published version contains the added authors properly.</li>
+    <li>PaperXchange holds the authority to review and verify the submitted documents.</li>
+  </ul>
+
+  <p style="margin-top:15px; line-height:1.7; color:#e0e0ff;">
+    By uploading your paper, you confirm that all the provided information is accurate
+    and you agree to follow the above rules.
+  </p>
+</div>
+
+</section>
+
+<section id="about" class="page">
+  <div class="hero">
+    <h1>About Us</h1>
+    <p>Our mission, story, and vision.</p>
+  </div>
+  <div class="card reveal">
+    <h2>Our Mission</h2>
+    <p>To democratize global academic collaboration.</p>
+  </div>
+  <div class="card reveal">
+  <h2>Idea & Concept By</h2>
+
+  <p style="margin-top:10px; font-size:17px; line-height:1.7; color:#dcdcff;">
+    <strong>TANVIR NIBIR</strong><br>
+    Creator of the PaperXchange idea, design, and business concept.
+  </p>
+
+  <div style="margin-top:15px; line-height:1.7; color:#cfcfe3; font-size:15px;">
+    <p><strong>LinkedIn:</strong><br>
+      <a href="https://linkedin.com/in/tanvirnibir13" target="_blank" style="color:#7c8cff; text-decoration:none;">
+        linkedin.com/in/tanvirnibir13
+      </a>
+    </p>
+
+    <p style="margin-top:10px;"><strong>Website / Portfolio:</strong><br>
+      <a href="https://sites.google.com/diu.edu.bd/tanvirpro/home" target="_blank" style="color:#7c8cff; text-decoration:none;">
+        sites.google.com/diu.edu.bd/tanvirpro/home
+      </a> 
+      <small style="color:#8c8caa;">(Working)</small>
+    </p>
+
+    <p style="margin-top:10px;"><strong>Address:</strong><br>
+      Dhanmondi, Dhaka, Bangladesh.
+    </p>
+
+    <p style="margin-top:10px;"><strong>Email:</strong><br>
+      <a href="mailto:tanvirnibir13@gmail.com" style="color:#7c8cff; text-decoration:none;">
+        tanvirnibir13@gmail.com
+      </a>
+    </p>
+  </div>
+</div>
+
+</section>
+
+<section id="blog" class="page">
+  <div class="hero">
+    <h1>Blog & Resources</h1>
+    <p>Guides, articles, insights.</p>
+  </div>
+
+  <div class="blog-grid reveal">
+    <div class="blog-card">
+      <h3>How to Join Research</h3>
+      <p>Modern pathways for students.</p>
+    </div>
+    <div class="blog-card">
+      <h3>What is Scopus?</h3>
+      <p>Understanding indexing.</p>
+    </div>
+  </div>
+ <div class="blog-grid reveal">
+
+  <div class="blog-card">
+    <h3>How Research Papers Boost Scholarship Chances</h3>
+    <p>
+      Universities prefer applicants who have proven academic capability.
+      A published paper instantly strengthens your academic profile.
+    </p>
+  </div>
+
+  <div class="blog-card">
+    <h3>Top Scholarships That Value Research Experience</h3>
+    <p>
+      Programs like Erasmus+, Fulbright, MEXT, and DAAD give extra points
+      if you have publications in your CV.
+    </p>
+  </div>
+
+  <div class="blog-card">
+    <h3>How to Write a Strong Scholarship SOP Using Your Research Paper</h3>
+    <p>
+      Mentioning your research journey, contributions, and impact helps
+      your SOP stand out from thousands of applicants.
+    </p>
+  </div>
+
+  <div class="blog-card">
+    <h3>Why Published Research Shows Leadership & Commitment</h3>
+    <p>
+      Completing a paper demonstrates deep focus, teamwork, and academic discipline —
+      all qualities scholarship panels look for.
+    </p>
+  </div>
+
+</div>
+
+</section>
+
+<section id="contact" class="page">
+  <div class="hero">
+    <h1>Contact Us</h1>
+    <p>We're here to help.</p>
+  </div>
+  <div class="card reveal">
+    <form>
+      <input type="text" placeholder="Name" />
+      <input type="email" placeholder="Email" />
+      <textarea placeholder="Message"></textarea>
+      <button>Send</button>
+    </form>
+  </div>
+</section>
+
+<script>
+const navLinks = document.querySelectorAll(".nav-link");
+const pages = document.querySelectorAll(".page");
+
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+
+    navLinks.forEach(n => n.classList.remove("active"));
+    pages.forEach(p => p.classList.remove("active"));
+
+    link.classList.add("active");
+    document.getElementById(link.dataset.page).classList.add("active");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+});
+
+function reveal() {
+  const reveals = document.querySelectorAll(".reveal");
+  reveals.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 80) {
+      el.classList.add("visible");
+    }
+  });
+}
+window.addEventListener("scroll", reveal);
+
+document.addEventListener("mousemove", e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 40;
+  const y = (e.clientY / window.innerHeight - 0.5) * 40;
+
+  document.querySelector(".blob1").style.transform = `translate(${x}px, ${y}px)`;
+  document.querySelector(".blob2").style.transform = `translate(${-x}px, ${-y}px)`;
+});
+</script>
+
+</body>
+</html>
